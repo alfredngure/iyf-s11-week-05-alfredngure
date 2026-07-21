@@ -60,3 +60,73 @@ function addNavItem(text, href) {
 // Example usage:
 addNavItem("Blog", "/blog");
 addNavItem("Portfolio", "/portfolio");
+// Create HTML elements for counter
+const container = document.createElement("div");
+const countDisplay = document.createElement("h2");
+const btnIncrement = document.createElement("button");
+const btnDecrement = document.createElement("button");
+const btnReset = document.createElement("button");
+
+let count = 0;
+countDisplay.textContent = count;
+
+btnIncrement.textContent = "+";
+btnDecrement.textContent = "-";
+btnReset.textContent = "Reset";
+
+container.append(countDisplay, btnIncrement, btnDecrement, btnReset);
+document.body.appendChild(container);
+
+// Event Listeners
+btnIncrement.addEventListener("click", () => {
+  count++;
+  countDisplay.textContent = count;
+});
+
+btnDecrement.addEventListener("click", () => {
+  if (count > 0) {
+    count--;
+    countDisplay.textContent = count;
+  }
+});
+
+btnReset.addEventListener("click", () => {
+  count = 0;
+  countDisplay.textContent = count;
+});
+document.addEventListener("keydown", (event) => {
+  // Ctrl + S: Custom Save Notification
+  if (event.ctrlKey && event.key.toLowerCase() === "s") {
+    event.preventDefault();
+    alert("Saved!");
+  }
+
+  // Escape: Clear all form inputs
+  if (event.key === "Escape") {
+    const inputs = document.querySelectorAll("input, textarea");
+    inputs.forEach(input => input.value = "");
+  }
+
+  // Ctrl + Enter: Submit active form
+  if (event.ctrlKey && event.key === "Enter") {
+    const activeForm = document.querySelector("form");
+    if (activeForm) {
+      activeForm.requestSubmit();
+    }
+  }
+});
+const taskUl = document.querySelector("ul");
+
+// Single event listener on parent UL using delegation
+taskUl.addEventListener("click", (event) => {
+  // Toggle task completion
+  if (event.target.classList.contains("task-item")) {
+    event.target.classList.toggle("completed");
+  }
+  
+  // Delete task if delete button clicked
+  if (event.target.classList.contains("delete-btn")) {
+    event.target.parentElement.remove();
+  }
+});
+
